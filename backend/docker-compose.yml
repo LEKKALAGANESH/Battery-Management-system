@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bms
+    ports:
+      - "5432:5432"
+    volumes:
+      - bms-pgdata:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+volumes:
+  bms-pgdata:

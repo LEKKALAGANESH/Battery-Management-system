@@ -1,0 +1,293 @@
+{
+  "version": "2.0.0",
+  "runtimeConfiguration": {
+    "environment": "default",
+    "laxTestingModeEnabled": false,
+    "apiConnectivityCheck": true,
+    "logLevel": "error",
+    "logDestination": "stdout+platform",
+    "logMaxFileSize": 2147483648,
+    "requestHeaderNameRequestId": "x-scan-request-id",
+    "requestHeaderNameScenarioId": "x-scan-scenario-id",
+    "requestHeaderNameRequestType": "x-scan-request-type",
+    "requestFlowrate": 100,
+    "requestTimeout": 30,
+    "requestTlsInsecureSkipVerify": true,
+    "responseFollowRedirection": false,
+    "responseMaxBodySizeScan": 10485760,
+    "happyPathOnly": false,
+    "maxRequestRetryAttempts": 5,
+    "maxScanDuration": 1800,
+    "memoryLimit": 2147483648,
+    "memoryTimeSpan": 10,
+    "reportMaxRequestSizeHappyPath": 8092,
+    "reportMaxRequestSizeTest": 8092,
+    "reportIncludeRequestBody": true,
+    "reportIncludeResponseBody": true,
+    "reportMaxHttpResponseSizeHappyPath": 8092,
+    "reportMaxBodySizeHappyPath": 8092,
+    "reportMaxHttpResponseSizeTest": 8092,
+    "reportMaxBodySizeTest": 8092,
+    "reportIssuesOnly": false,
+    "reportMaxIssues": 1000,
+    "reportMaxSize": 20971520,
+    "reportGenerateCurlCommand": true,
+    "normalizeServerUrls": true
+  },
+  "customizations": {
+    "happyPaths": {
+      "retry": 1,
+      "responsePolicy": {
+        "httpStatusExpected": true,
+        "mustBeConformant": true
+      },
+      "httpStatusExpected": []
+    },
+    "tests": {
+      "responsePolicy": {
+        "httpStatusExpected": true,
+        "mustBeConformant": true
+      }
+    }
+  },
+  "environments": {
+    "default": {
+      "variables": {
+        "bearerAuth": {
+          "name": "SCAN42C_SECURITY_BEARERAUTH",
+          "from": "environment",
+          "required": true
+        },
+        "host": {
+          "name": "SCAN42C_HOST",
+          "from": "environment",
+          "required": false,
+          "default": "http://localhost:8080"
+        }
+      }
+    }
+  },
+  "operations": {
+    "/api/auth/login:post": {
+      "operationId": "/api/auth/login:post",
+      "request": {
+        "operationId": "/api/auth/login:post",
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "/api/auth/login:post",
+            "method": "POST",
+            "url": "{{host}}/api/auth/login",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {
+                "email": "demo@bms.dev",
+                "password": "demo123"
+              }
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/~1api~1auth~1login:post/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "/api/battery/data:post": {
+      "operationId": "/api/battery/data:post",
+      "request": {
+        "operationId": "/api/battery/data:post",
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "/api/battery/data:post",
+            "method": "POST",
+            "url": "{{host}}/api/battery/data",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {
+                "battery_id": "nitnsbjfmigvujpfpqwbefdvcafmvyqw",
+                "current": 3.562040966066341e+37,
+                "temperature": 9.643186689408066e+37,
+                "time": "qdjzfhftbocmdeflaqhsisttmhovklls",
+                "voltage": 2.3558218915081174e+38
+              }
+            }
+          }
+        },
+        "defaultResponse": "201",
+        "responses": {
+          "201": {
+            "expectations": {
+              "httpStatus": 201
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/~1api~1battery~1data:post/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "/api/battery/{id}/{field}:get": {
+      "operationId": "/api/battery/{id}/{field}:get",
+      "request": {
+        "operationId": "/api/battery/{id}/{field}:get",
+        "auth": [
+          "bearerAuth"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "/api/battery/{id}/{field}:get",
+            "method": "GET",
+            "url": "{{host}}/api/battery/{id}/{field}",
+            "queries": [
+              {
+                "key": "start",
+                "value": "hnhwhhyralrqobgspwviipdvmoyiovyy"
+              },
+              {
+                "key": "end",
+                "value": "axduwfzchwcgzmjxqqnvpzqmrvohyciu"
+              }
+            ],
+            "paths": [
+              {
+                "key": "field",
+                "value": "voltage"
+              },
+              {
+                "key": "id",
+                "value": "zihcnyiwocaotxrsqriomoishzhvxeii"
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/~1api~1battery~1{id}~1{field}:get/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "/api/battery/{id}:get": {
+      "operationId": "/api/battery/{id}:get",
+      "request": {
+        "operationId": "/api/battery/{id}:get",
+        "auth": [
+          "bearerAuth"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "/api/battery/{id}:get",
+            "method": "GET",
+            "url": "{{host}}/api/battery/{id}",
+            "queries": [
+              {
+                "key": "page",
+                "value": 1
+              },
+              {
+                "key": "pageSize",
+                "value": 500
+              }
+            ],
+            "paths": [
+              {
+                "key": "id",
+                "value": "quschqyjzigrsxfkbithfecxwcauamrv"
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/~1api~1battery~1{id}:get/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    }
+  },
+  "authenticationDetails": [
+    {
+      "bearerAuth": {
+        "type": "bearer",
+        "default": "bearerAuth",
+        "credentials": {
+          "bearerAuth": {
+            "credential": "{{bearerAuth}}",
+            "description": "bearerAuth security"
+          }
+        }
+      }
+    }
+  ]
+}
